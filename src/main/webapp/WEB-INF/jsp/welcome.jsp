@@ -1,45 +1,72 @@
 <!DOCTYPE html>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html lang="en">
+
+<html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script>
+        var myApp = angular.module('myApp', []);
+        myApp.controller('myController', function ($scope, $http) {
+            $http.get('flight')
+                .then(function (response) {
+                    $scope.jsondata = response.data;
+                    console.log("status:" + response.status);
+                }).catch(function (response) {
+                console.error('Error occurred:', response.status, response.data);
+            }).finally(function () {
+                console.log("Task Finished.");
+            });
+        });
+        /* Private Methods */
+        //HTTP GET- get all employees collection
+       /* function _refreshPageData() {
+            $http({
+                method: 'GET',
+                url: 'employees'
+            }).then(function successCallback(response) {
+                $scope.employees = response.data.employees;
+            }, function errorCallback(response) {
+                console.log(response.statusText);
+            });
+        }*/
+    </script>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-<link rel="stylesheet" type="text/css"
-	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
 
-<c:url value="/css/main.css" var="jstlCss" />
-<link href="${jstlCss}" rel="stylesheet" />
-
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
 </head>
 <body>
-
-	<nav class="navbar navbar-inverse">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Spring Boot</a>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#about">About</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-	<div class="container">
-
-		<div class="starter-template">
-			<h1>Spring Boot Web JSP Example</h1>
-			<h2>Message: ${message}</h2>
-		</div>
-
-	</div>
-	<!-- /.container -->
-
-	<script type="text/javascript"
-		src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<div ng-app="myApp" ng-controller="myController">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Name1</td>
+            <td>{{jsondata.icao24}}</td>
+        </tr>
+        <tr>
+            <td>Name2</td>
+            <td>{{jsondata.callsign}}</td>
+        </tr>
+        <tr>
+            <td>Name3</td>
+            <td>{{jsondata.origin_country}}</td>
+        </tr>
+    </table>
+</div>
 </body>
-
 </html>
