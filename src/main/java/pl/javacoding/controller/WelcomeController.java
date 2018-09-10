@@ -51,6 +51,7 @@ public class WelcomeController {
     public ResponseEntity<?> checkFlight(@RequestBody GeoCoordinates geoCoordinates) {
         this.geoCoordinates.setLatitude(geoCoordinates.getLatitude());
         this.geoCoordinates.setLongitude(geoCoordinates.getLongitude());
+        System.out.println("Wykonano");
         return new ResponseEntity<String>(HttpStatus.CREATED);
     }
 }
