@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Spring Examples</title>
+    <!-- Bootstrap core CSS -->
+    <link href="scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="scripts/angular/functions.js"></script>
+</head>
+
+<body ng-app="myApp" ng-controller="myController">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Start Spring Examples</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1 class="mt-5">Find Nearest Flight</h1>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript -->
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form ng-submit="checkFlight()">
+                    <div class="form-group">
+                        <label>Latitude</label>
+                        <input type="text" class="form-control" placeholder="Latitude" ng-model="form.latitude"></div>
+                    <div class="form-group">
+                        <label>Longitude</label>
+                        <input type="text" class="form-control" placeholder="Longitude" ng-model="form.longitude"></div>
+                    <button type="submit" class="btn btn-primary">Find Nearest Flight</button>
+                </form>
+                <p class="">Paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+            <div class="col-md-6">
+                <md-content layout-padding>
+                    <md-progress-circular ng-disabled="!vm.activated" md-diameter="96"></md-progress-circular>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Flight ID</th>
+                            <th>Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Icao24</td>
+                            <td>{{jsondata.icao24}}</td>
+                        </tr>
+                        <tr>
+                            <td>Callsign</td>
+                            <td>{{jsondata.callsign}}</td>
+                        </tr>
+                        <tr>
+                            <td>Origin Country</td>
+                            <td>{{jsondata.origin_country}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-content>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="scripts/jquery/jquery.min.js"></script>
+<script src="scripts/bootstrap/js/bootstrap.bundle.min.js"></script>
+<pingendo onclick="window.open('https://pingendo.com/', '_blank')"
+          style="cursor:pointer;position: fixed;bottom: 10px;right:10px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:250px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">
+    Made with Pingendo Free&nbsp;&nbsp;
+    <img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block" alt="Pingendo logo" height="16">
+</pingendo>
+</body>
+
+</html>
