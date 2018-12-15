@@ -11,4 +11,6 @@ public class Main {
         State state = new FlightManager(new URL("https://opensky-network.org/api/states/all")).findNearestFlight(51.6525013, 18.4329261);
         System.out.println(state.toString());
     }
+
+
 }
