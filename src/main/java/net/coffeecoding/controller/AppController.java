@@ -47,4 +47,9 @@ public class AppController {
         this.geoCoordinates.setLongitude(geoCoordinates.getLongitude());
         return new ResponseEntity<String>(HttpStatus.CREATED);
     }
+
+    @GetMapping("/error")
+    public String showErrorPage() {
+        return "error-page";
+    }
 }
