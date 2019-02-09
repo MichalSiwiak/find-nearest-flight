@@ -14,6 +14,7 @@ public class FlightManager {
 
     private URL url;
     private List<State> states;
+    private long nearestDistance;
 
     public List<State> getStates() {
         return states;
@@ -68,10 +69,13 @@ public class FlightManager {
                 index = i;
             }
         }
-        System.out.println("Nearest distance: " + minValue);
+        this.nearestDistance = minValue;
         return states.get(index);
     }
 
+    public long getNearestDistance() {
+        return nearestDistance;
+    }
 
     private double calculateDistance(double latitude1, double longitude1, double latitude2, double longitude2) {
 
