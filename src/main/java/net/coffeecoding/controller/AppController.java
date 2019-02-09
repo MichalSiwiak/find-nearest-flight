@@ -68,6 +68,7 @@ public class AppController {
         return new ResponseEntity<String>(HttpStatus.CREATED);
     }
 
+<<<<<<< HEAD
     //zrobić druga metodę przyjmującą String
     @RequestMapping(value = "/cokolwiek", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<Response> cokolwiek(@RequestBody Geocode geocode) {
@@ -135,5 +136,10 @@ public class AppController {
         System.out.println(response.toString());
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+=======
+    @GetMapping("/error")
+    public String showErrorPage() {
+        return "error-page";
+>>>>>>> c5eedef7cb13a2a39c380574621e32ffa7a0cfa0
     }
 }
