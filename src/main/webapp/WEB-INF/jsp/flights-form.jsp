@@ -23,7 +23,7 @@
     <link rel="icon" href="resources/img/favicon.png">
     <!-- PAGE scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script src="resources/js/functions2.js"></script>
+    <script src="resources/js/functions.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -37,7 +37,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
 
 
-<body ng-app="myApp1" ng-controller="myController1" class="bg-light text-dark" style="">
+<body ng-app="myApp" ng-controller="myController" class="bg-light text-dark" style="">
 
 <div id="wrap">
     <div id="main" class="clear-top">
@@ -89,7 +89,8 @@
                         class="">DESCRIPTION
                 </text>
                 </a>
-                <a href="/resume" class="navbar-brand d-flex align-items-center"><i
+                <a href="https://coffeecoding.net/resources/img/cv_msiwiak.pdf" target="_blank"
+                   class="navbar-brand d-flex align-items-center"><i
                         class="fa fa-address-card fa-2x lead fa-fw d-inline-block" aria-hidden="true"></i>&nbsp;&nbsp;<text
                         class="">RESUME
                 </text>
@@ -122,23 +123,20 @@
             <div class="container">
                 <div class="row mt-5">
                     <div class="offset-md-2 col-md-8" style="">
-                        <p class="lead mb-4"> enter geographic coordinates in decimal format e.g. for Warsaw latitude =
-                            52.2297700 and longitude = 21.0117800 </p>
+                        <p class="lead mb-4"> enter the location - city, ​​street, province for example: Warsaw, Warsaw
+                            marszałkowska, od Zamość lubelskie etc.</p>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="py-2">
             <div class="container">
-                <form ng-submit="check()">
-                    <div class="row">
-                        <div class="col-md-4 offset-md-2">
-                            <input type="text" required="true"
-                                   class="form-control text-center" placeholder="Latitude"
-                                   ng-model="location">
+                <form ng-submit="searchFlight()">
+                    <div class="row text-center">
+                        <div class="col-md-8 offset-md-2">
+                            <input type="text" required="true" class="form-control text-center"
+                                   placeholder="location ..." ng-model="location">
                         </div>
-
                     </div>
                     <div class="row text-center">
                         <div class="col-md-12 py-4">
@@ -148,18 +146,34 @@
                 </form>
             </div>
         </div>
-
         <div class="py-0">
             <div class="container">
                 <div class="row mb-5">
                     <div class="col-md-8 offset-md-2" style="">
                         <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Icao24<span
-                                    class="badge badge-pill badge-dark">{{jsondata.icao24}}</span></li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">Callsign<span
-                                    class="badge badge-pill badge-dark">{{jsondata.callsign}}</span></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Origin Country<span
-                                    class="badge badge-pill badge-dark">{{jsondata.origin_country}}</span></li>
+                                    class="badge badge-pill badge-dark">{{response.callsign}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Distance From
+                                Aircraft<span
+                                        class="badge badge-pill badge-dark">{{response.distanceFromAircraft}}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft
+                                Location<span class="badge badge-pill badge-dark">{{response.aircraftLocation}}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Point Location<span
+                                    class="badge badge-pill badge-dark">{{response.pointLocation}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Point
+                                Address<span class="badge badge-pill badge-dark">{{response.address}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Flight
+                                From<span class="badge badge-pill badge-dark">{{response.flightFrom}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Flight To<span
+                                    class="badge badge-pill badge-dark">{{response.flightTo}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft
+                                Location<span class="badge badge-pill badge-dark">{{response.aircraftType}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Route<span
+                                    class="badge badge-pill badge-dark">{{response.route}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft Photo<span
+                                    class="badge badge-pill badge-dark">{{response.photo}}</span></li>
                         </ul>
                     </div>
                 </div>

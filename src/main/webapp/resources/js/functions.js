@@ -1,53 +1,43 @@
 var myApp = angular.module('myApp', []);
 myApp.controller('myController', function ($scope, $http) {
 
-    //Initialize page with default data which is blank in this example
-    $scope.form = {
-        latitude: "",
-        longitude: "",
-    };
 
-    _refreshPageData();
+    $scope.location = '';
+    $scope.data = '';
+    $scope.response = '';
 
-    //HTTP GET methods
-    function _refreshPageData() {
-        $http.get('flight')
-            .then(function (response) {
-                $scope.jsondata = response.data;
-                console.log("status:" + response.status);
-            }).catch(function (response) {
-
-            console.error('Error occurred:', response.status, response.data);
-        }).finally(function () {
-            console.log("Task Finished.");
-        });
-    }
 
     //HTTP POST methods
-    $scope.checkFlight = function () {
+    $scope.searchFlight = function () {
         $http({
             method: "POST",
-            url: 'checkflight',
-            data: angular.toJson($scope.form),
+            url: 'https://maps.googleapis.com/maps/api/geocode/json',
+            params: {address: $scope.location, key: 'AIzaSyCOBqf1LYN9p_LH-sTWAjg2jXCX_RWfsUI'}
+        }).then(function (response) {
+            $scope.data = response.data;
+            console.log($scope.data);
+            getJsonData();
+        })
+    };
+
+    function getJsonData() {
+        $http({
+            method: "POST",
+            url: 'searchFlight',
+            data: $scope.data,
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(_success, _error);
+        }).then(function (response) {
+            console.log(response.data);
+            $scope.response = response.data;
+            _success(response);
+        })
     };
+
 
     function _success(response) {
-        _refreshPageData();
-        _clearForm()
+        console.log(response.status);
     }
-
-    function _error(response) {
-        console.log(response.statusText);
-    }
-
-    function _clearForm() {
-        $scope.form.latitude = "";
-        $scope.form.longitude = "";
-    };
-
 
 });
