@@ -51,12 +51,12 @@ public class FlightController {
             pointLocation.setLatitude(geocode.getResults().get(0).getGeometry().getLocation().getLat());
             pointLocation.setLongitude(geocode.getResults().get(0).getGeometry().getLocation().getLng());
 
-
+            System.out.println(pointLocation.toString());
             //searching nearest flight from opensky-network.org
             flightManager = new FlightManager(new URL("https://opensky-network.org/api/states/all"));
             State nearestFlight = flightManager.findNearestFlight(pointLocation.getLatitude(), pointLocation.getLongitude());
 
-
+            System.out.println(nearestFlight.toString());
             //setting other information from opensky-network.org
             response.setDistanceFromAircraft(flightManager.getNearestDistance());
             response.setCallsign(nearestFlight.getCallsign());
@@ -81,10 +81,10 @@ public class FlightController {
 
             //getting details of flight from flightradar
             flightradar = new Gson().fromJson(content, Flightradar.class);
-            response.setFlightFrom(flightradar.getResults().get(0).getDetail().getSchd_from());
-            response.setFlightTo(flightradar.getResults().get(0).getDetail().getSchd_to());
-            response.setRoute(flightradar.getResults().get(0).getDetail().getRoute());
-            response.setAircraftType(flightradar.getResults().get(0).getDetail().getAc_type());
+            String route = flightradar.getResults().get(0).getDetail().getRoute();
+            response.setRoute(((route == null) ? "N/A" : route));
+            String ac_type = flightradar.getResults().get(0).getDetail().getAc_type();
+            response.setAircraftType(((ac_type == null) ? "N/A" : ac_type));
 
 
             //scraping aircraft photo

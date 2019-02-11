@@ -9,8 +9,6 @@ public class Response {
     private Location aircraftLocation;
     private Location pointLocation;
     private Address address;
-    private String flightFrom;
-    private String flightTo;
     private String aircraftType;
     private String route;
     private URL photo;
@@ -23,8 +21,6 @@ public class Response {
                 ", aircraftLocation=" + aircraftLocation +
                 ", pointLocation=" + pointLocation +
                 ", address=" + address +
-                ", flightFrom='" + flightFrom + '\'' +
-                ", flightTo='" + flightTo + '\'' +
                 ", aircraftType='" + aircraftType + '\'' +
                 ", route='" + route + '\'' +
                 ", photo=" + photo +
@@ -69,22 +65,6 @@ public class Response {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public String getFlightFrom() {
-        return flightFrom;
-    }
-
-    public void setFlightFrom(String flightFrom) {
-        this.flightFrom = flightFrom;
-    }
-
-    public String getFlightTo() {
-        return flightTo;
-    }
-
-    public void setFlightTo(String flightTo) {
-        this.flightTo = flightTo;
     }
 
     public String getAircraftType() {

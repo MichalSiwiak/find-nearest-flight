@@ -151,29 +151,26 @@
                 <div class="row mb-5">
                     <div class="col-md-8 offset-md-2" style="">
                         <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Callsign<span
-                                    class="badge badge-pill badge-dark">{{response.callsign}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Callsign<h4
+                                    class="m-0 text-dark">{{response.callsign}}</h4></li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">Distance From
-                                Aircraft<span
-                                        class="badge badge-pill badge-dark">{{response.distanceFromAircraft}}</span>
-                            </li>
+                                Aircraft [KM]<h4 class="m-0 text-dark">{{response.distanceFromAircraft}}</h4></li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft
-                                Location<span class="badge badge-pill badge-dark">{{response.aircraftLocation}}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Point Location<span
-                                    class="badge badge-pill badge-dark">{{response.pointLocation}}</span></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Point
-                                Address<span class="badge badge-pill badge-dark">{{response.address}}</span></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Flight
-                                From<span class="badge badge-pill badge-dark">{{response.flightFrom}}</span></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Flight To<span
-                                    class="badge badge-pill badge-dark">{{response.flightTo}}</span></li>
+                                Location<h4 class="m-0 text-dark">{{response.aircraftLocation.latitude}}&nbsp{{response.aircraftLocation.longitude}}</h4></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Point Location
+                                <h4 class="m-0 text-dark">{{response.pointLocation.latitude}}&nbsp{{response.pointLocation.longitude}}</h4></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Point Address
+                                <h4 class="m-0 text-dark">{{response.address.formattedAddress}}</h4></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Flight From<h4
+                                    class="m-0 text-dark">{{response.flightFrom}}</h4></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Flight To<h4
+                                    class="m-0 text-dark">{{response.flightTo}}</h4></li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft
-                                Location<span class="badge badge-pill badge-dark">{{response.aircraftType}}</span></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Route<span
-                                    class="badge badge-pill badge-dark">{{response.route}}</span></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft Photo<span
-                                    class="badge badge-pill badge-dark">{{response.photo}}</span></li>
+                                Type<h4 class="m-0 text-dark">{{response.aircraftType}}</h4></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Route<h4
+                                    class="m-0 text-dark">{{response.route}}</h4></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft Photo
+                                <h4 class="m-0 text-dark"><img style="width: 300px" src="{{response.photo}}"/></h4></li>
                         </ul>
                     </div>
                 </div>
