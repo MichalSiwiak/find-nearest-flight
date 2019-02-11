@@ -1,6 +1,9 @@
 package net.coffeecoding.model;
 
 import com.google.gson.Gson;
+import net.coffeecoding.model.geocode.Address;
+import net.coffeecoding.model.geocode.Geocode;
+import net.coffeecoding.model.geocode.Result;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,12 +13,8 @@ import java.util.ArrayList;
 
 public class TestGeocode {
 
-
     public static void main(String[] args) throws MalformedURLException {
-
-
         String string = "zamość";
-
         URL url = new URL("https://maps.googleapis.com/maps/api/geocode/json?address=" + string + "&key=AIzaSyCOBqf1LYN9p_LH-sTWAjg2jXCX_RWfsUI");
         InputStreamReader reader = null;
         try {
@@ -23,12 +22,9 @@ public class TestGeocode {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         Geocode geocode = new Gson().fromJson(reader, Geocode.class);
-
-
         System.out.println(geocode.toString());
-
-
         ArrayList<Result> results = geocode.getResults();
 
         for (Result result : results) {
@@ -41,25 +37,21 @@ public class TestGeocode {
             System.out.println(result.getGeometry().getViewport().getSouthwest().getLng());
             System.out.println(result.getFormatted_address());
             System.out.println(result.getPlace_id());
+
             ArrayList<String> types = result.getTypes();
 
             for (String type : types) {
                 System.out.println(type);
             }
 
-
             ArrayList<Address> address_components = result.getAddress_components();
+
             for (Address address_component : address_components) {
                 System.out.println(address_component.getLong_name());
                 System.out.println(address_component.getShort_name());
-
                 ArrayList<String> types1 = address_component.getTypes();
                 System.out.println(types1);
             }
-
-
         }
-
-
     }
 }

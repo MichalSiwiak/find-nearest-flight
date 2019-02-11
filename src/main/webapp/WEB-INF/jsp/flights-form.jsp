@@ -23,7 +23,7 @@
     <link rel="icon" href="resources/img/favicon.png">
     <!-- PAGE scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script src="resources/js/functions.js"></script>
+    <script src="resources/js/functions2.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -37,7 +37,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
 
 
-<body ng-app="myApp" ng-controller="myController" class="bg-light text-dark" style="">
+<body ng-app="myApp1" ng-controller="myController1" class="bg-light text-dark" style="">
 
 <div id="wrap">
     <div id="main" class="clear-top">
@@ -89,8 +89,7 @@
                         class="">DESCRIPTION
                 </text>
                 </a>
-                <a href="https://coffeecoding.net/resources/img/cv_msiwiak.pdf" target="_blank"
-                   class="navbar-brand d-flex align-items-center"><i
+                <a href="/resume" class="navbar-brand d-flex align-items-center"><i
                         class="fa fa-address-card fa-2x lead fa-fw d-inline-block" aria-hidden="true"></i>&nbsp;&nbsp;<text
                         class="">RESUME
                 </text>
@@ -132,16 +131,14 @@
 
         <div class="py-2">
             <div class="container">
-                <form ng-submit="checkFlight()">
+                <form ng-submit="check()">
                     <div class="row">
-                        <div class="col-md-4 offset-md-2"><input type="text" required="true"
-                                                                 pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)"
-                                                                 class="form-control text-center" placeholder="Latitude"
-                                                                 ng-model="form.latitude"></div>
-                        <div class="col-md-4"><input type="text" required="true"
-                                                     pattern="\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$"
-                                                     class="form-control text-center" id="inputError"
-                                                     placeholder="Longitude" ng-model="form.longitude"></div>
+                        <div class="col-md-4 offset-md-2">
+                            <input type="text" required="true"
+                                   class="form-control text-center" placeholder="Latitude"
+                                   ng-model="location">
+                        </div>
+
                     </div>
                     <div class="row text-center">
                         <div class="col-md-12 py-4">

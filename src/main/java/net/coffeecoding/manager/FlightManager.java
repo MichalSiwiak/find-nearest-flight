@@ -1,8 +1,8 @@
 package net.coffeecoding.manager;
 
 import com.google.gson.Gson;
-import net.coffeecoding.model.Opensky;
-import net.coffeecoding.model.State;
+import net.coffeecoding.model.opensky.Opensky;
+import net.coffeecoding.model.opensky.State;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

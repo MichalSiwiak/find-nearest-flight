@@ -1,4 +1,4 @@
-package net.coffeecoding.model;
+package net.coffeecoding.model.opensky;
 
 public class GeoCoordinates {
 

@@ -1,4 +1,4 @@
-package net.coffeecoding.model;
+package net.coffeecoding.model.geocode;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,4 +1,4 @@
-package net.coffeecoding.model;
+package net.coffeecoding.model.opensky;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
