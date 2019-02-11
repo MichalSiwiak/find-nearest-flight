@@ -20,9 +20,11 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.min.css">
     <link rel="stylesheet" href="https://coffeecoding.net/resources/css/now-ui-kit.css" type="text/css">
     <link rel="stylesheet" href="https://coffeecoding.net/resources/css/style.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/style.css" type="text/css">
     <link rel="icon" href="resources/img/favicon.png">
     <!-- PAGE scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-animate.min.js"></script>
     <script src="resources/js/functions.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -35,30 +37,28 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOBqf1LYN9p_LH-sTWAjg2jXCX_RWfsUI&callback=initMap"
+            async defer></script>
 
 
 <body ng-app="myApp" ng-controller="myController" class="bg-light text-dark" style="">
 
 <div id="wrap">
     <div id="main" class="clear-top">
-
-
         <div class="collapse" id="navbarHeader">
             <div class="container">
                 <div class="row">
                     <div class="col-md-7 py-4">
                         <h4>About</h4>
                         <p class="text-info">Free open source projects present different java solutions using spring,
-                            hibernate
-                            and other popular frameworks.</p>
+                            hibernate and other popular frameworks.</p>
                     </div>
                     <div class="col-md-3 offset-md-1 py-4">
                         <h4>Contact</h4>
                         <ul class="list-unstyled">
                             <li>
                                 <a href="https://pl.linkedin.com/in/michalsiwiak" class="text-secondary"
-                                   target="_blank">Follow
-                                    on LinkedIn</a>
+                                   target="_blank">Follow on LinkedIn</a>
                             </li>
                             <li>
                                 <a href="mailto:info@coffeecoding.net" target="_top" class="text-secondary">Email me</a>
@@ -68,14 +68,11 @@
                 </div>
             </div>
         </div>
-
-
         <div class="navbar sticky-top navbar-dark bg-info">
             <div class="container d-flex justify-content-between">
                 <a href="https://www.coffeecoding.net/" class="navbar-brand d-flex align-items-center"><i
                         class="fa fa-home fa-2x lead fa-fw d-inline-block" aria-hidden="true"></i>&nbsp;&nbsp;<text
-                        class="">
-                    HOME
+                        class=""> HOME
                 </text>
                 </a>
                 <a href="https://github.com/MichalSiwiak/find-nearest-flight" target="_blank"
@@ -104,8 +101,6 @@
                         class="navbar-toggler-icon"></span></button>
             </div>
         </div>
-
-
         <div class="text-center py-4 bg-secondary"
              style="	background-image: linear-gradient(to left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.9));	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
             <div class="container">
@@ -118,62 +113,78 @@
             </div>
         </div>
 
-
         <div class="py-0">
             <div class="container">
-                <div class="row mt-5">
-                    <div class="offset-md-2 col-md-8" style="">
-                        <p class="lead mb-4"> enter the location - city, ​​street, province for example: Warsaw, Warsaw
-                            marszałkowska, od Zamość lubelskie etc.</p>
+                <div class="row mt-3">
+                    <div class="offset-md-2 m-0" style="">
+                        <h4 class="m-0 mb-3 px-3">Enter the location - city, ​​street, province for example: Wrocław,
+                            Warszawa Marszałkowska, Zamość lubelskie etc.</h4>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="py-2">
+
+        <div class="py-0">
             <div class="container">
                 <form ng-submit="searchFlight()">
-                    <div class="row text-center">
-                        <div class="col-md-8 offset-md-2">
-                            <input type="text" required="true" class="form-control text-center"
-                                   placeholder="location ..." ng-model="location">
+                    <div class="row">
+                        <div class="m-0 p-0 pr-0 pl-3 col-md-8"><input type="text" required="true"
+                                                                       class="form-control text-center rounded-0"
+                                                                       placeholder="location ..." ng-model="location">
                         </div>
-                    </div>
-                    <div class="row text-center">
-                        <div class="col-md-12 py-4">
-                            <button type="submit" class="btn btn-primary px-1 py-2">Find Nearest Flight</button>
+                        <div class="text-left p-0 pr-3 col-md-4">
+                            <button type="submit" style="height:37px" class="btn btn-primary px-1 py-2 w-100">Find
+                                Nearest Flight
+                            </button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="py-0">
+
+        <div class="py-0 mt-4" ng-hide="showSpinner">
+            <div class="container text-center">
+                <h3>Please wait - request is processing ...</h3>
+                <div class="loader text-center m-0 mx-auto"></div>
+            </div>
+        </div>
+
+        <div class="py-0 mt-4" ng-hide="showData">
             <div class="container">
-                <div class="row mb-5">
-                    <div class="col-md-8 offset-md-2" style="">
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Callsign<h4
-                                    class="m-0 text-dark">{{response.callsign}}</h4></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Distance From
-                                Aircraft [KM]<h4 class="m-0 text-dark">{{response.distanceFromAircraft}}</h4></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft
-                                Location<h4 class="m-0 text-dark">{{response.aircraftLocation.latitude}}&nbsp{{response.aircraftLocation.longitude}}</h4></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Point Location
-                                <h4 class="m-0 text-dark">{{response.pointLocation.latitude}}&nbsp{{response.pointLocation.longitude}}</h4></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Point Address
-                                <h4 class="m-0 text-dark">{{response.address.formattedAddress}}</h4></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Flight From<h4
-                                    class="m-0 text-dark">{{response.flightFrom}}</h4></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Flight To<h4
-                                    class="m-0 text-dark">{{response.flightTo}}</h4></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft
-                                Type<h4 class="m-0 text-dark">{{response.aircraftType}}</h4></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Route<h4
-                                    class="m-0 text-dark">{{response.route}}</h4></li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft Photo
-                                <h4 class="m-0 text-dark"><img style="width: 300px" src="{{response.photo}}"/></h4></li>
-                        </ul>
-                    </div>
-                </div>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Callsign<h4
+                            class="m-0 text-dark">{{response.callsign}}</h4>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Distance From Aircraft
+                        [KM]<h4 class="m-0 text-dark">{{response.distanceFromAircraft}}</h4>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft Location
+                        [latitude / longitude]<h5 class="m-0 text-dark">
+                            {{response.aircraftLocation.latitude}}&nbsp;/&nbsp;{{response.aircraftLocation.longitude}}</h5>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Point Location
+                        [latitude / longitude] <h5 class="m-0 text-dark">
+                            {{response.pointLocation.latitude}}&nbsp;/&nbsp;{{response.pointLocation.longitude}}</h5>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Point Address <h5
+                            class="m-0 text-dark">{{response.address.formattedAddress}}</h5>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft Type<h4
+                            class="m-0 text-dark">{{response.aircraftType}}</h4>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Route<h4
+                            class="m-0 text-dark">{{response.route}}</h4>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Aircraft Photo <h4
+                            class="m-0 text-dark"><img style="width: 300px" src="{{response.photo}}"></h4>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="py-0 my-4" ng-hide="showData">
+            <div class="container text-center" style="height:500px;">
+                <div id="map"></div>
             </div>
         </div>
 

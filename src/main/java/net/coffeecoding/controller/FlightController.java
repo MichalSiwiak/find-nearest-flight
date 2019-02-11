@@ -65,7 +65,8 @@ public class FlightController {
 
 
             //setting other information from  google api
-            address.setFormattedAddress(geocode.getResults().get(0).getFormatted_address());
+            String formatted_address = geocode.getResults().get(0).getFormatted_address();
+            address.setFormattedAddress(((formatted_address == null) ? "N/A" : formatted_address));
             response.setPointLocation(pointLocation);
             response.setAircraftLocation(aircraftLocation);
             response.setAddress(address);
@@ -89,11 +90,18 @@ public class FlightController {
 
             //scraping aircraft photo
             String logo = flightradar.getResults().get(0).getDetail().getReg();
-            Document document = Jsoup.connect("https://www.airliners.net/search?keywords=" + logo).timeout(6000).get();
-            Elements elements = document.select("div.ps-v2-results-photo");
-            response.setPhoto(new URL(elements.get(0).getElementsByTag("img").attr("src")));
-        } catch (IOException e) {
+            if (logo != null) {
+                Document document = Jsoup.connect("https://www.airliners.net/search?keywords=" + logo).timeout(6000).get();
+                Elements elements = document.select("div.ps-v2-results-photo");
+                response.setPhoto(new URL(elements.get(0).getElementsByTag("img").attr("src")));
+            }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            Response responseError = new Response();
+            responseError.setStatus("Some error occurred. Please try again few minute later or select another localization.");
+            System.out.println(responseError.getStatus());
+            return new ResponseEntity<>(responseError, HttpStatus.OK);
         }
 
         System.out.println(response.toString());
