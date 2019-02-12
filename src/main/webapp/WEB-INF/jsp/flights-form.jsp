@@ -23,9 +23,7 @@
     <link rel="stylesheet" href="resources/css/style.css" type="text/css">
     <link rel="icon" href="resources/img/favicon.png">
     <!-- PAGE scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-animate.min.js"></script>
-    <script src="resources/js/functions.js"></script>
+
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -37,6 +35,9 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-animate.min.js"></script>
+    <script src="resources/js/functions.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOBqf1LYN9p_LH-sTWAjg2jXCX_RWfsUI&callback=initMap"
             async defer></script>
 
@@ -142,6 +143,12 @@
             </div>
         </div>
 
+        <div class="py-0 mt-4">
+            <div class="container text-center">
+                <div ng-if="response.message"><h3>{{response.message}}</h3></div>
+            </div>
+        </div>
+
         <div class="py-0 mt-4" ng-hide="showSpinner">
             <div class="container text-center">
                 <h3>Please wait - request is processing ...</h3>
@@ -149,8 +156,9 @@
             </div>
         </div>
 
-        <div class="py-0 mt-4" ng-hide="showData">
+        <div class="py-0 mt-4" ng-hide="showData" ng-if="!response.message">
             <div class="container">
+                <div ng-if="response.message"><h3>{{response.message}}</h3></div>
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">Callsign<h4
                             class="m-0 text-dark">{{response.callsign}}</h4>
@@ -182,7 +190,7 @@
             </div>
         </div>
 
-        <div class="py-0 my-4" ng-hide="showData">
+        <div class="py-0 my-4" ng-hide="showData" ng-if="!response.message">
             <div class="container text-center" style="height:500px;">
                 <div id="map"></div>
             </div>

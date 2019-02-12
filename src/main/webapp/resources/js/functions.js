@@ -11,6 +11,7 @@ myApp.controller('myController', function ($scope, $http) {
 
     //HTTP POST methods
     $scope.searchFlight = function () {
+        $scope.response.message = null;
         $http({
             method: "POST",
             url: 'https://maps.googleapis.com/maps/api/geocode/json',
@@ -19,6 +20,7 @@ myApp.controller('myController', function ($scope, $http) {
             $scope.showData = true;
             $scope.showSpinner = false;
             $scope.data = response.data;
+
             console.log($scope.data);
             getJsonData();
         })
@@ -44,27 +46,30 @@ myApp.controller('myController', function ($scope, $http) {
         console.log(response.status);
         $scope.showData = false;
         $scope.showSpinner = true;
-        initMap();
+        if ($scope.response.message == null) {
+            initMap();
+        }
     }
 
 
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 8,
-            center: {
-                lat: $scope.response.pointLocation.latitude,
-                lng: $scope.response.pointLocation.longitude
+            center: { // middle point
+                lat: ($scope.response.pointLocation.latitude + $scope.response.aircraftLocation.latitude) / 2,
+                lng: ($scope.response.pointLocation.longitude + $scope.response.aircraftLocation.longitude) / 2
             }
         });
 
-        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        /*var imagePlane = 'https://coffeecoding.net/resources/img/planePoint.png';
+        var imagePoint = 'https://coffeecoding.net/resources/img/imagePoint.png';*/
         var plane = new google.maps.Marker({
             position: {
                 lat: $scope.response.aircraftLocation.latitude,
                 lng: $scope.response.aircraftLocation.longitude
             },
             map: map,
-            icon: image,
+           /* icon: imagePlane,*/
             title: 'Nearest Flight'
         });
 
@@ -74,7 +79,7 @@ myApp.controller('myController', function ($scope, $http) {
                 lng: $scope.response.pointLocation.longitude
             },
             map: map,
-            icon: image,
+         /*   icon: imagePoint,*/
             title: 'Point'
         });
     }

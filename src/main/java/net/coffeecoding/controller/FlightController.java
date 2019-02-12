@@ -23,7 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.net.URL;
 
 
@@ -51,15 +50,16 @@ public class FlightController {
             pointLocation.setLatitude(geocode.getResults().get(0).getGeometry().getLocation().getLat());
             pointLocation.setLongitude(geocode.getResults().get(0).getGeometry().getLocation().getLng());
 
+
             System.out.println(pointLocation.toString());
             //searching nearest flight from opensky-network.org
             flightManager = new FlightManager(new URL("https://opensky-network.org/api/states/all"));
             State nearestFlight = flightManager.findNearestFlight(pointLocation.getLatitude(), pointLocation.getLongitude());
 
+
             System.out.println(nearestFlight.toString());
             //setting other information from opensky-network.org
             response.setDistanceFromAircraft(flightManager.getNearestDistance());
-            response.setCallsign(nearestFlight.getCallsign());
             aircraftLocation.setLatitude(nearestFlight.getLatitude());
             aircraftLocation.setLongitude(nearestFlight.getLongitude());
 
@@ -72,41 +72,58 @@ public class FlightController {
             response.setAddress(address);
 
 
-            //connecting to flightradar using callsign number
-            HttpClient client = HttpClientBuilder.create().build();
-            HttpGet request = new HttpGet("https://www.flightradar24.com/v1/search/web/find?query=" + nearestFlight.getCallsign().trim());
-            HttpResponse flightradarResponse = client.execute(request);
-            HttpEntity entity = flightradarResponse.getEntity();
-            String content = EntityUtils.toString(entity);
+            if (nearestFlight.getCallsign().trim().length() != 0 && nearestFlight.getCallsign() != null) {
 
+                response.setCallsign(nearestFlight.getCallsign());
 
-            //getting details of flight from flightradar
-            flightradar = new Gson().fromJson(content, Flightradar.class);
-            String route = flightradar.getResults().get(0).getDetail().getRoute();
-            response.setRoute(((route == null) ? "N/A" : route));
-            String ac_type = flightradar.getResults().get(0).getDetail().getAc_type();
-            response.setAircraftType(((ac_type == null) ? "N/A" : ac_type));
+                //connecting to flightradar using callsign number
+                HttpClient client = HttpClientBuilder.create().build();
+                HttpGet request = new HttpGet("https://www.flightradar24.com/v1/search/web/find?query=" + nearestFlight.getCallsign().trim());
+                HttpResponse flightradarResponse = client.execute(request);
+                HttpEntity entity = flightradarResponse.getEntity();
+                String content = EntityUtils.toString(entity);
 
+                //getting details of flight from flightradar
+                flightradar = new Gson().fromJson(content, Flightradar.class);
+                if (flightradar.getResults().size() != 0) {
+                    String route = flightradar.getResults().get(0).getDetail().getRoute();
+                    response.setRoute(((route == null) ? "N/A" : route));
+                    String ac_type = flightradar.getResults().get(0).getDetail().getAc_type();
+                    response.setAircraftType(((ac_type == null) ? "N/A" : ac_type));
+                    String logo = flightradar.getResults().get(0).getDetail().getReg();
 
-            //scraping aircraft photo
-            String logo = flightradar.getResults().get(0).getDetail().getReg();
-            if (logo != null) {
-                Document document = Jsoup.connect("https://www.airliners.net/search?keywords=" + logo).timeout(6000).get();
-                Elements elements = document.select("div.ps-v2-results-photo");
-                response.setPhoto(new URL(elements.get(0).getElementsByTag("img").attr("src")));
+                    if (logo != null) {
+                        Document document = Jsoup.connect("https://www.airliners.net/search?keywords=" + logo).timeout(6000).get();
+                        Elements elements = document.select("div.ps-v2-results-photo");
+                        if (elements.size() != 0) {
+                            URL url = new URL(elements.get(0).getElementsByTag("img").attr("src"));
+                            response.setPhoto(((url == null) ? new URL("https://coffeecoding.net/resources/img/plane-no-photo.png") : url));
+                        }
+                    } else {
+                        response.setPhoto(new URL("https://coffeecoding.net/resources/img/plane-no-photo.png"));
+                    }
+                } else {
+                    response.setRoute("N/A");
+                    response.setAircraftType("N/A");
+                    response.setPhoto(new URL("https://coffeecoding.net/resources/img/plane-no-photo.png"));
+                }
+            } else {
+                response.setRoute("N/A");
+                response.setAircraftType("N/A");
+                response.setPhoto(new URL("https://coffeecoding.net/resources/img/plane-no-photo.png"));
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();
             Response responseError = new Response();
-            responseError.setStatus("Some error occurred. Please try again few minute later or select another localization.");
-            System.out.println(responseError.getStatus());
+            responseError.setMessage("No results! The server did not find the required flight number. Please try again or select the exact location.");
+            System.out.println(responseError.getMessage());
             return new ResponseEntity<>(responseError, HttpStatus.OK);
         }
 
         System.out.println(response.toString());
         return new ResponseEntity<>(response, HttpStatus.OK);
-
 
     }
 

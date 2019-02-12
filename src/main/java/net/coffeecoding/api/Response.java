@@ -12,7 +12,8 @@ public class Response {
     private String aircraftType;
     private String route;
     private URL photo;
-    private String status;
+    private String message;
+
 
     @Override
     public String toString() {
@@ -25,7 +26,7 @@ public class Response {
                 ", aircraftType='" + aircraftType + '\'' +
                 ", route='" + route + '\'' +
                 ", photo=" + photo +
-                ", status='" + status + '\'' +
+                ", message='" + message + '\'' +
                 '}';
     }
 
@@ -93,11 +94,11 @@ public class Response {
         this.photo = photo;
     }
 
-    public String getStatus() {
-        return status;
+    public String getMessage() {
+        return message;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
