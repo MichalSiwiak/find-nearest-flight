@@ -61,15 +61,15 @@ myApp.controller('myController', function ($scope, $http) {
             }
         });
 
-        /*var imagePlane = 'https://coffeecoding.net/resources/img/planePoint.png';
-        var imagePoint = 'https://coffeecoding.net/resources/img/imagePoint.png';*/
+        var imagePlane = 'https://coffeecoding.net/resources/img/planebig.png';
+        var imagePoint = 'https://coffeecoding.net/resources/img/pointsmall.png';
         var plane = new google.maps.Marker({
             position: {
                 lat: $scope.response.aircraftLocation.latitude,
                 lng: $scope.response.aircraftLocation.longitude
             },
             map: map,
-           /* icon: imagePlane,*/
+            icon: imagePlane,
             title: 'Nearest Flight'
         });
 
@@ -79,7 +79,7 @@ myApp.controller('myController', function ($scope, $http) {
                 lng: $scope.response.pointLocation.longitude
             },
             map: map,
-         /*   icon: imagePoint,*/
+            icon: imagePoint,
             title: 'Point'
         });
     }
