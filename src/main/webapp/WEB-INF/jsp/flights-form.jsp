@@ -108,7 +108,7 @@
                 <div class="row">
                     <div class="col-md-0 text-left">
                         <h1 class="text-left text-primary">Find Nearest Flight</h1>
-                        <p class="lead text-left"></p>
+                        <p class="lead text-left">Finding the nearest flight based on geographic coordinates.</p>
                     </div>
                 </div>
             </div>
